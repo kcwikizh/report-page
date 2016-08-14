@@ -1,0 +1,14 @@
+{
+  "name": "kcwiki-report",
+  "description": "display data collected from kcwiki-report",
+  "author": "grzhan <envy518@gmail.com>",
+  "dependencies": {
+    "es6-promise": "^3.2.1",
+    "vue": "^1.0.26",
+    "whatwg-fetch": "^1.0.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.14.0",
+    "gulp": "^3.9.1"
+  }
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Kcwiki Report 情报</title>
+    <link rel="stylesheet" href="assets/semantic.min.css">
+    <style>
+        body { background: #e4e7ee; word-wrap: break-word; word-break: break-all; padding-top: 60px; }
+        #container { margin: 15px 80px; }
+        .ui.form { text-align: left; }
+        .clear { clear: both; }
+        .tabular > .item { cursor: pointer; }
+    </style>
+</head>
+<body>
+    <section class="ui centered stackable grid" id="container">
+        <article class="column ui segment">
+            <h2 class="ui centered dividing header">
+                Kcwiki 2016 夏季活动数据情报
+            </h2>
+            <div class="ui top attached tabular menu">
+                <div class="item" v-bind:class="{'active': nav == 'enemy'}" v-on:click="navTo('enemy')">深海数据</div>
+                <div class="item" v-bind:class="{'active': nav == 'new'}" v-on:click="navTo('new')">新舰娘属性</div>
+            </div>
+            <div class="ui bottom attached tab segment" v-bind:class="{'active': nav == 'enemy'}">
+                <table class="ui single line table">
+                    <thead>
+                        <tr><th>ID</th> <th>名称</th> <th>最大HP</th> <th>火力</th> <th>雷装</th> <th>对空</th> <th>装甲</th> <th>装备</th> </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="enemy in enemies">   
+                            <td>{{enemy.id}}</td>
+                            <td>{{enemy.name}}</td>
+                            <td>{{enemy.stats.maxHP}}</td>
+                            <td>{{enemy.stats.houg}}</td>
+                            <td>{{enemy.stats.raig}}</td>
+                            <td>{{enemy.stats.tyku}}</td>
+                            <td>{{enemy.stats.souk}}</td>
+                            <td><span v-for="slot in enemy.slots" v-if="slot" style="padding-left: 5px;">
+                                {{ slot }}
+                            </span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="ui bottom attached tab segment" v-bind:class="{'active': nav == 'new'}">
+                <table class="ui single line table">
+                    <thead>
+                        <tr> <th>ID</th> <th>名称</th> <th>等级</th> <th>对潜</th> <th>回避</th> <th>索敌</th> </tr> 
+                    </thead>
+                    <tbody>
+                        <tr v-for="attr in attrs">
+                            <td>{{ attr.id }}</td>
+                            <td>{{ attr.name }}</td>
+                            <td>{{ attr.level }}</td>
+                            <td>{{ attr.taisen }}</td>
+                            <td>{{ attr.kaihi }}</td>
+                            <td>{{ attr.sakuteki }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    </section>
+    <script src="assets/es6-promise.js"></script>
+    <script src="assets/fetch.js"></script>
+    <script src="assets/vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#container',
+            data: {
+                enemies: [],
+                attrs: [],
+                nav: 'enemy'
+            },
+            methods: {
+                navTo: function(to) {
+                    this.nav = to;
+                }
+            }
+        });
+        // Fetch data from api.kcwiki.moe
+        fetch('http://api.kcwiki.moe/report/enemies')
+            .then(function(response) {
+                return response.json();
+            }).then(function(json) {
+                vm.enemies = json;
+            }).catch(function(ex) {
+                console.log('parsing failed', ex);
+            });
+        fetch('http://api.kcwiki.moe/report/new')
+            .then(function(response) {
+                return response.json();
+            }).then(function(json) {
+                vm.attrs = json;
+            }).catch(function(ex) {
+                console.log('parsing failed', ex);
+            });
+
+    </script>
+</body>
+</html>
