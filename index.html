@@ -19,10 +19,10 @@
                 Kcwiki 2016 夏季活动数据情报
             </h2>
             <div class="ui top attached tabular menu">
-                <div class="item" v-bind:class="{'active': nav == 'enemy'}" v-on:click="navTo('enemy')">深海数据</div>
-                <div class="item" v-bind:class="{'active': nav == 'new'}" v-on:click="navTo('new')">新舰娘属性</div>
+                <div class="item" :class="{'active': nav == 'enemy'}" @click="navTo('enemy')">深海数据</div>
+                <div class="item" :class="{'active': nav == 'new'}" @click="navTo('new')">新舰娘属性</div>
             </div>
-            <div class="ui bottom attached tab segment" v-bind:class="{'active': nav == 'enemy'}">
+            <div class="ui bottom attached tab segment" :class="{'active': nav == 'enemy'}">
                 <table class="ui single line table">
                     <thead>
                         <tr><th>ID</th> <th>名称</th> <th>最大HP</th> <th>火力</th> <th>雷装</th> <th>对空</th> <th>装甲</th> <th>装备</th> </tr>
@@ -43,7 +43,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="ui bottom attached tab segment" v-bind:class="{'active': nav == 'new'}">
+            <div class="ui bottom attached tab segment" :class="{'active': nav == 'new'}">
                 <table class="ui single line table">
                     <thead>
                         <tr> <th>ID</th> <th>名称</th> <th>等级</th> <th>对潜</th> <th>回避</th> <th>索敌</th> </tr> 
